@@ -14,7 +14,8 @@
  * @link       http://www.php.net/manual/fr/book.pdo.php
  */
 
-class PdoGsbRapports{   		
+class PdoGsbRapports
+{   		
       	 /*--------------------Version locale---------------------------------------- */
       private static $serveur='mysql:host=localhost';
       private static $bdd='dbname=gsbrapports';   		
@@ -26,12 +27,14 @@ class PdoGsbRapports{
  * Constructeur privé, crée l'instance de PDO qui sera sollicitée
  * pour toutes les méthodes de la classe
  */				
-	private function __construct(){
+	private function __construct()
+	{
             self::$monPdo = new PDO(self::$serveur.';'.self::$bdd, self::$user, self::$mdp); 
             self::$monPdo->query("SET CHARACTER SET utf8");
 	}
         
-	public function _destruct(){
+	public function _destruct()
+	{
             self::$monPdo = null;
 	}
 /**
@@ -41,13 +44,21 @@ class PdoGsbRapports{
  
  * @return l'unique objet de la classe PdoGsbRapports
  */
-	public  static function getPdo(){
+	public  static function getPdo()
+	{
 		if(self::$monPdoGsbRapports == null){
 			self::$monPdoGsbRapports = new PdoGsbRapports();
 		}
 		return self::$monPdoGsbRapports;  
 	}
 
+	public function getLeVisiteur($login, $mdp)
+	{
+		$req = "SELECT id, nom, prenom FROM visiteur WHERE login = '$login' AND mdp = '$mdp'";
+		$res = PdoGsbRapports::$monPdo->query($req)->fetch();
+
+		return $res;
+	}
         
 }   // fin classe
 ?>

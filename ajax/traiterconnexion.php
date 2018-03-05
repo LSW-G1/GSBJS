@@ -1,10 +1,15 @@
 <?php
-$mdp = $_POST['mdp'];
-$login = $_POST['login'];
-$data = null;
-$visiteur = array('id' => "a213", 'nom' => 'Durand', 'login' => 'jdurand', 'mdp' => 'aaaa');
-if ($visiteur['login'] == $login && $visiteur['mdp'] == $mdp) {
-    $data = $visiteur;
-}
-echo json_encode($data);
+	session_start();
+	require_once '../data/pdogsbrapports.php';
+	$mdp = $_POST['mdp'];
+	$login = $_POST['login'];
+	$pdo = PdoGsbRapports::getPdo();
+	$visiteur = $pdo->getLeVisiteur($login, $mdp);
+	if ($visiteur != NULL) 
+	{
+		$_SESSION['visiteur'] = $visiteur;
+		$_SESSION['visiteur']['mdp'] = $mdp;
+		$_SESSION['visiteur']['login'] = $login;
+	}
+	echo json_encode($visiteur);
 ?>
