@@ -1,7 +1,7 @@
-<div data-role="page" id="pageaccueil">
+<div data-role="page" id="pagechoisirrapportamodifier">
     <?php include "entetepage.html"; ?>
     <div data-role="content">
-        <?php include "logo.html"; ?>
+
     </div>
     <?php include "piedpage.html"; ?>
 </div>
