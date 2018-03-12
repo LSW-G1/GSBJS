@@ -24,6 +24,9 @@ $(function ()
 		$.mobile.changePage("#pagevisites");
 	})
 
+
+
+
 	$('#pageconnexion #btnconnexion').bind("click", function (e)
 	{
 		e.preventDefault();
@@ -34,12 +37,13 @@ $(function ()
 				"mdp": mdp,
 				"login": login
 			},
-			foncRetourConnexion, "json");
+			foncRetourConnexion,
+			"json");
 	});
 
 	function foncRetourConnexion(data)
 	{
-		if (data != null)
+		if (data)
 		{
 			$.mobile.changePage("#pageaccueil");
 		}
@@ -52,4 +56,66 @@ $(function ()
 			$("#pageconnexion #message").html("erreur de login et/ou mdp");
 		}
 	}
+
+
+
+	$('#date').on("input", function (e)
+	{
+		var date = $("#date").val()
+		$.post("ajax/traiterListeMedecin.php",
+			{
+				"date": date
+			},
+			foncRetourListe,
+			"json");
+
+	})
+
+	function foncRetourListe(data)
+	{
+		if (data)
+		{
+			$("#listeMedecins").text("")
+			data.forEach(function (medecins)
+			{
+				$("#listeMedecins").append("<a id='rapport-" + medecins.idRapport + "'><li>" + medecins.nomMed + " " + medecins.prenomMed + "</li></a>")
+				$("#rapport-" + medecins.idRapport).on("click", function ()
+				{
+					$.mobile.changePage("#pagemodifierunrapport",
+					{
+						type: "POST",
+						data: medecins
+					});
+
+					$("#rapport-motif").val(medecins.motif);
+					$("#rapport-bilan").val(medecins.bilan);
+				})
+			})
+		}
+		else
+		{
+			$("#pagevisites #message").css(
+			{
+				color: 'red'
+			});
+			$("#pagevisites #message").html("Aucune visite à cette date");
+		}
+	}
+
+	// function foncModifRapport(data)
+	// {
+	// 	if (data)
+	// 	{
+	// 		$("#").text("")
+	// 		$("#").append("value='" + + "'")
+	// 	}
+	// 	else
+	// 	{
+	// 		$("#pagevisites #message").css(
+	// 		{
+	// 			color: 'red'
+	// 		});
+	// 		$("#pagevisites #message").html("Aucune visite à cette date");
+	// 	}
+	// }
 });

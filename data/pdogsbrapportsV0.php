@@ -46,7 +46,8 @@ class PdoGsbRapports
  */
 	public  static function getPdo()
 	{
-		if(self::$monPdoGsbRapports == null){
+		if(self::$monPdoGsbRapports == null)
+		{
 			self::$monPdoGsbRapports = new PdoGsbRapports();
 		}
 		return self::$monPdoGsbRapports;  
@@ -54,8 +55,16 @@ class PdoGsbRapports
 
 	public function getLeVisiteur($login, $mdp)
 	{
-		$req = "SELECT id, nom, prenom FROM visiteur WHERE login = '$login' AND mdp = '$mdp'";
+		$req = "SELECT id, nom, prenom, login FROM visiteur WHERE login = '$login' AND mdp = '$mdp'";
 		$res = PdoGsbRapports::$monPdo->query($req)->fetch();
+
+		return $res;
+	}
+
+	public function getListeMedecins($date, $id)
+	{
+		$req = "SELECT medecin.nom AS nomMed, medecin.prenom AS prenomMed, rapport.id as idRapport, rapport.motif AS motif, rapport.bilan AS bilan FROM rapport, medecin WHERE rapport.idVisiteur = '$id' AND medecin.id = rapport.idMedecin AND rapport.date = '$date'";
+		$res = PdoGsbRapports::$monPdo->query($req)->fetchAll();
 
 		return $res;
 	}
