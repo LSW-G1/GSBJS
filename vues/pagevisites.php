@@ -1,6 +1,6 @@
 <div data-role="page" id="pagevisites">
 	<?php
-	include "vues/entetepage.html"; //inclue l'entete
+	include "vues/entetepage.html"; 
 	?>
 	<div data-role="content">
 		<p><h1>Choisir un rapport</h1></p>

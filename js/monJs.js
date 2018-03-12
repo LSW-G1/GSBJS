@@ -87,6 +87,8 @@ $(function ()
 						data: medecins
 					});
 
+					$("#rapport-medecin").text("");
+					$("#rapport-medecin").append("Médecin : " + medecins.nomMed + " " + medecins.prenomMed);
 					$("#rapport-motif").val(medecins.motif);
 					$("#rapport-bilan").val(medecins.bilan);
 				})
