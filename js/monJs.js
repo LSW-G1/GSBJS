@@ -91,6 +91,7 @@ $(function ()
 					$("#rapport-medecin").append("Médecin : " + medecins.nomMed + " " + medecins.prenomMed);
 					$("#rapport-motif").val(medecins.motif);
 					$("#rapport-bilan").val(medecins.bilan);
+					$("#rapport-id").val(medecins.idRapport);
 				})
 			})
 		}
@@ -104,20 +105,16 @@ $(function ()
 		}
 	}
 
-	// function foncModifRapport(data)
-	// {
-	// 	if (data)
-	// 	{
-	// 		$("#").text("")
-	// 		$("#").append("value='" + + "'")
-	// 	}
-	// 	else
-	// 	{
-	// 		$("#pagevisites #message").css(
-	// 		{
-	// 			color: 'red'
-	// 		});
-	// 		$("#pagevisites #message").html("Aucune visite à cette date");
-	// 	}
-	// }
+	$("#changeRapport").bind("click", function (e)
+	{
+		var motif = $("#rapport-motif").val()
+		var bilan = $("#rapport-bilan").val()
+		var idRapport = $("#rapport-id").val()
+		$.post("ajax/traiterRapport.php",
+		{
+			"motif": motif,
+			"bilan": bilan,
+			"idRapport": idRapport
+		});
+	});
 });

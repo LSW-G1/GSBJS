@@ -74,6 +74,8 @@ class PdoGsbRapports
 		$req = "UPDATE rapport SET motif = (:motif), bilan = (:bilan) WHERE id = '$idRapport'";
 		$res = PdoGsbRapports::$monPdo->prepare($req);
 		$res->execute(array(":motif" => $motif, ":bilan" => $bilan));
+
+		return $res;
 	}
         
 }   // fin classe
