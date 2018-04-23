@@ -1,4 +1,4 @@
-$(function ()
+$(document).on("ready", function ()
 {
 	$("#panel #ajouterunrapport").bind("click", function (e)
 	{
@@ -117,4 +117,56 @@ $(function ()
 			"idRapport": idRapport
 		});
 	});
+
+	$("#autocomplete").on("filterablebeforefilter", function (e, data)
+	{
+		var $ul = $(this),
+			$input = $(data.input),
+			value = $input.val(),
+			html = "";
+		$ul.html("");
+		if (value && value.length > 2)
+		{
+			$ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
+			$ul.listview("refresh");
+
+			$.post("ajax/traiterRechercheMedecins.php",
+			{
+				"value": value
+			}, foncRetourRecherchePageMedecins, "json");
+			// $.ajax(
+			// 	{
+			// 		url: "http://gd.geobytes.com/AutoCompleteCity",
+			// 		dataType: "jsonp",
+			// 		crossDomain: true,
+			// 		data:
+			// 		{
+			// 			q: $input.val()
+			// 		}
+			// 	})
+			// 	.then(function (response)
+			// 	{
+			// 		$.each(response, function (i, val)
+			// 		{
+			// 			html += "<li>" + val + "</li>";
+			// 		});
+			// 		$ul.html(html);
+			// 		$ul.listview("refresh");
+			// 		$ul.trigger("updatelayout");
+			// 	});
+		}
+	});
+
+	function foncRetourRecherchePageMedecins(value)
+	{
+		html = ""
+		value.forEach(function (medecin)
+			{
+				console.log(medecin)
+			})
+			// Make : value foreach list
+			// value : "SURNAME Name Adress Phone" -> all medics
+			// After that : Every Visitor == Admin, can modify medics and can see all of meeting with other visitor.
+			// RESUME : Make stupid work !
+	}
 });

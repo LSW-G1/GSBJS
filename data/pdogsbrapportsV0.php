@@ -69,6 +69,14 @@ class PdoGsbRapports
 		return $res;
 	}
 
+	public function getAllMed($value)
+	{
+		$req = "SELECT * FROM medecin WHERE nom LIKE '$value%' ";
+		$res = PdoGsbRapports::$monPdo->query($req)->fetchAll();
+
+		return $res;
+	}
+
 	public function updateRapportVisite($motif, $bilan, $idRapport)
 	{
 		$req = "UPDATE rapport SET motif = (:motif), bilan = (:bilan) WHERE id = '$idRapport'";
