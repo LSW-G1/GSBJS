@@ -120,6 +120,8 @@ $(document).on("ready", function ()
 
 	$("#autocomplete").on("filterablebeforefilter", function (e, data)
 	{
+
+		console.log(this)
 		var $ul = $(this),
 			$input = $(data.input),
 			value = $input.val(),
@@ -130,43 +132,26 @@ $(document).on("ready", function ()
 			$ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
 			$ul.listview("refresh");
 
-			$.post("ajax/traiterRechercheMedecins.php",
-			{
-				"value": value
-			}, foncRetourRecherchePageMedecins, "json");
-			// $.ajax(
-			// 	{
-			// 		url: "http://gd.geobytes.com/AutoCompleteCity",
-			// 		dataType: "jsonp",
-			// 		crossDomain: true,
-			// 		data:
-			// 		{
-			// 			q: $input.val()
-			// 		}
-			// 	})
-			// 	.then(function (response)
-			// 	{
-			// 		$.each(response, function (i, val)
-			// 		{
-			// 			html += "<li>" + val + "</li>";
-			// 		});
-			// 		$ul.html(html);
-			// 		$ul.listview("refresh");
-			// 		$ul.trigger("updatelayout");
-			// 	});
+			$.ajax(
+				{
+					url: "ajax/traiterRechercheMedecins.php",
+					method: "POST",
+					data:
+					{
+						value: value
+					}
+				})
+				.then(function (response)
+				{
+					JSON.parse(response).forEach((val) =>
+					{
+						console.log(val)
+						html += "<li class='ui-li-static ui-body-inherit'>" + val.nom + " " + val.prenom + " " + val.adresse + " " + val.tel + "<a href='" + " " + "' class='ui-input-clear ui-icon-carat-r ui-btn-icon-right ui-corner-all' title='Info sur " + val.nom + " " + val.prenom + "'></a></li>";
+					});
+					$ul.html(html);
+					$ul.trigger("updatelayout");
+				});
 		}
 	});
 
-	function foncRetourRecherchePageMedecins(value)
-	{
-		html = ""
-		value.forEach(function (medecin)
-			{
-				console.log(medecin)
-			})
-			// Make : value foreach list
-			// value : "SURNAME Name Adress Phone" -> all medics
-			// After that : Every Visitor == Admin, can modify medics and can see all of meeting with other visitor.
-			// RESUME : Make stupid work !
-	}
 });

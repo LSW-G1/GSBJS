@@ -71,8 +71,8 @@ class PdoGsbRapports
 
 	public function getAllMed($value)
 	{
-		$req = "SELECT * FROM medecin WHERE nom LIKE '$value%' ";
-		$res = PdoGsbRapports::$monPdo->query($req)->fetchAll();
+		$req = "SELECT id, nom, prenom, adresse, tel FROM medecin WHERE nom LIKE '$value%' ";
+		$res = PdoGsbRapports::$monPdo->query($req)->fetchAll(PDO::FETCH_ASSOC);
 
 		return $res;
 	}
@@ -87,6 +87,3 @@ class PdoGsbRapports
 	}
         
 }   // fin classe
-?>
-
-
